@@ -1,5 +1,4 @@
 (function($,undefined) {
-
     //默认参数配置
     var defaults = {
         selectors: {
@@ -23,7 +22,6 @@
         function PageSwitch(element, options) {
             //深复制
             this.settings = $.extend(true, defaults, options || {});
-            console.log(this.settings)
             this.element = element;
             this.init();
             if (this.settings.keyboard) {
@@ -115,8 +113,6 @@
                 } else if (me.settings.loop&&me.settings.index === me.pagesCount - 1) {
                     me.settings.index = 0;
                 };
-                console.log(123)
-                console.log(me.flag)
                if(me.flag){
                     me._scrollPage();
                }
@@ -137,7 +133,7 @@
                 //获取class
                 pageClass = me.selectors.page.substring(1);
                 me.activeClass = me.selectors.active.substring(1);
-                console.log(me.activeClass)
+                //console.log(me.activeClass)
                 var pageHtml = "<ul class=" + pageClass + ">";
                 for (var i = 0; i < me.pagesCount; i++) {
                     pageHtml += "<li></li>";
@@ -150,9 +146,9 @@
                 var pages = me.element.find(me.selectors.page);
                 me.pagesItem = pages.find("li");
                 me.pagesItem.css("cursor", "pointer");
-                console.log(me.settings.index)
+                //console.log(me.settings.index)
                 me.pagesItem.eq(me.settings.index).addClass(me.activeClass);
-                console.log(me.pagesItem.eq(me.index))
+                //console.log(me.pagesItem.eq(me.index))
                 if (me.direction) {
                     pages.addClass("vertical");
                 } else {
@@ -165,11 +161,9 @@
                 var me = this;
 
                 me.element.on("click", me.selectors.page + " li", function() {
-                    me.index = $(this).index();
+                    me.settings.index = $(this).index();
                     //页面滑动事件
                     me._scrollPage();
-
-                    //处理鼠标滑动的兼容性问题
 
                 });
 
@@ -198,21 +192,16 @@
                 };
                
             	var animateCss = me.direction ? { top: -dest.top } : { left: -dest.left };
-            	console.log(animateCss)
+            	//console.log(animateCss)
                 $(me.sections).animate(animateCss, me.settings.duration,function(){
 					me.flag = true;
 				});
 
-                me.pagesItem.eq(me.settings.index).addClass("active").siblings().removeClass("active");
-	                
-             
-                
-                
+                me.pagesItem.eq(me.settings.index).addClass("active").siblings().removeClass("active");                
           
             }
 
         };
-
 
         return PageSwitch;
 
@@ -226,7 +215,7 @@
 	        console.log(instance)
 	        if (!instance) {
 	            instance = new PageSwitch(me, options);
-	            console.log(instance)
+	            //console.log(instance)
 	            me.data("PageSwitch", instance)
 	        }
 	    })
